@@ -1,0 +1,25 @@
+@font-face {font-family: "iconfont";
+  src: url('iconfont.eot?t=1592129523711'); /* IE9 */
+  src: url('iconfont.eot?t=1592129523711#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAAPAAAsAAAAAB8QAAAN0AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCDBgqDLIMHATYCJAMMCwgABCAFhG0HNxvOBsgusG14k7gABWxXACwXADxhQcDn+c1D4oXodE8W065O1ulr/9c0RZB9Vek2WZZVI1Koj/L/AeZyg+cr3IyfsSzkJtwSIAC6AQLMzFdw9/9cTu+uAg/ntyyXuSYd3QswDijQsQYFkqYFkqA3jF3QEvdDAC7ZTZXqnl7fQRONOUwAYqinTWhmDOiGcoGNwKyYqxGLMLDlbHkPWBh8X3yldDZIDIU5tuVOHNh/8o/tVJAU6OohCKezAWwRKKAoQIPoXunoqBIliqrgqopqc76JRiCnCiclEQg0mWn94YFEgDAxS30ACiKd5KKEDhsSPrYTXXWTAsDkMVJLgCOYkvZshfRrDfOmmvLsWdswbBeLdYhGuwbn8ro7LggROVgAb1Ni79mb109nWp0pWLZthQhE+hXpbaFlWJHWVCzzpBmCl0xHZ+552nqdk16sWCEie+fuJlg2ZfWhgqtOuf6cM5n3HMkSieXYWGJvkbPe+XBurMbcSrsL7c+2Puy+OwyePXo2J/okGok9jc0Nc6oa53VcnD6PuYjnSpK3VhPHbRf9W9Q285XRm7xC8W36ef0c048/L+wllPzRMWUmI22+vHnzTKyzXVbqb7CoZWRmrZPj2+9NKVhMKscpdmfcLvOuvgVS5ExRYMxCJ0XprKVTOAspd+ylMd6uyPRktOOtkcYrard731az+O/UBXJ1yNOz426qAql/V6+5/GZZtPHrHE3a2dS9TbO3Je5Fh2EAIIm6qGoASVX3St6f9xtmySGdHoOq/21PA/DKz/g38CfRdC/CRgIT/iphR4LWxKZRaUXgCAyXottt2yRAHlfygyoBUvsb7koHEpvA5kIIEotsoLDJi2pKUTDwKAsmNjXApYizxR5psApCO0BhWwCClN5AkpyLoEjpB9WUXzBI7x9MUqbApX1p1vTI36B2HSZTyMHek3BQnyRWtlnaYfkN6SI0OS0OaA/EuRfGUsVL5tNnFBNPMWHMeL0eO1Zh/9FJhPXBYRSGCY4cnfhky3zgWEk3JUr0r3rSvM+ICNrUwYhJEAeyvEAeWyKmvPaiXfj8DaIVQiZuwFU5HxCW87pHK3PLDuiZIu6Eu5VHco+0NSEUpLBEBJ0CGwmtRAKl1b18xCbm3AGx1MYCtVJdFfPlVdH77QBczC2VkEIJjR7mRWZ9UhJrtwAA') format('woff2'),
+  url('iconfont.woff?t=1592129523711') format('woff'),
+  url('iconfont.ttf?t=1592129523711') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+  url('iconfont.svg?t=1592129523711#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-mima:before {
+  content: "\e755";
+}
+
+.icon-yonghu:before {
+  content: "\e60e";
+}
+
