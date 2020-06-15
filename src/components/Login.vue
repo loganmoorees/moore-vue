@@ -4,15 +4,15 @@
       <div class="avatar_box">
         <img src="../assets/logo.png" alt />
       </div>
-      <el-form :model="loginForm" label-width="0px" class="form_login">
+      <el-form :model="loginForm" :rules="loginFormRule" label-width="0px" class="form_login">
         <!-- 用户名 -->
-        <el-form-item>
-          <el-input prefix-icon="iconfont icon-yonghu"></el-input>
+        <el-form-item prop="username">
+          <el-input v-model="loginForm.username" prefix-icon="iconfont icon-yonghu"></el-input>
         </el-form-item>
 
         <!-- 密码 -->
-        <el-form-item>
-          <el-input prefix-icon="iconfont icon-mima"></el-input>
+        <el-form-item prop="password">
+          <el-input v-model="loginForm.password" prefix-icon="iconfont icon-mima" type="password"></el-input>
         </el-form-item>
 
         <!-- 按钮 -->
@@ -30,7 +30,21 @@
 export default {
   data() {
     return {
-      loginForm: {}
+      loginForm: {
+        username: "admin",
+        password: "admin"
+      },
+
+      loginFormRule: {
+        username: [
+          { required: true, message: " 请输入用户名", trigger: "blur" },
+          { min: 4, max: 10, message: "用户名长度错误", trigger: "blur" }
+        ],
+        password: [
+          { required: true, message: " 请输入密码", trigger: "blur" },
+          { min: 5, max: 10, message: "密码长度错误", trigger: "blur" }
+        ]
+      }
     }
   }
 }
