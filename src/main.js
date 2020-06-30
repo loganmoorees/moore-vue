@@ -4,6 +4,10 @@ import router from './router'
 import './plugins/element.js'
 import './assets/css/global.css'
 import './assets/fonts/iconfont.css'
+import axios from 'axios'
+
+axios.defaults.baseURL = 'http://localhost:8081/'
+Vue.prototype.$http = axios
 
 Vue.config.productionTip = false
 
