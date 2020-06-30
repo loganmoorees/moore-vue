@@ -1,22 +1,106 @@
 <template>
-    <div>
-        <el-button type="info" @click="loginOut">
-            退出
-        </el-button>
-    </div>
+  <el-container>
+      <!-- 头部 -->
+    <el-header>Header</el-header>
+    <el-container>
+        <!-- 侧边栏 -->
+      <el-aside>
+        <el-menu
+      default-active="2"
+      class="el-menu-vertical-demo"
+      @open="handleOpen"
+      @close="handleClose">
+      <el-submenu index="1">
+        <template slot="title">
+          <i class="el-icon-location"></i>
+          <span>导航一</span>
+        </template>
+        <el-menu-item-group>
+          <template slot="title">分组一</template>
+          <el-menu-item index="1-1">选项1</el-menu-item>
+          <el-menu-item index="1-2">选项2</el-menu-item>
+        </el-menu-item-group>
+        <el-menu-item-group title="分组2">
+          <el-menu-item index="1-3">选项3</el-menu-item>
+        </el-menu-item-group>
+        <el-submenu index="1-4">
+          <template slot="title">选项4</template>
+          <el-menu-item index="1-4-1">选项1</el-menu-item>
+        </el-submenu>
+      </el-submenu>
+      <el-menu-item index="2">
+        <i class="el-icon-menu"></i>
+        <span slot="title">导航二</span>
+      </el-menu-item>
+      <el-menu-item index="3">
+        <i class="el-icon-setting"></i>
+        <span slot="title">导航三</span>
+      </el-menu-item>
+    </el-menu>
+  </el-col>
+  <el-col :span="12">
+    <h5>自定义颜色</h5>
+    <el-menu
+      default-active="2"
+      class="el-menu-vertical-demo"
+      @open="handleOpen"
+      @close="handleClose"
+      background-color="#545c64"
+      text-color="#fff"
+      active-text-color="#ffd04b">
+      <el-submenu index="1">
+        <template slot="title">
+          <i class="el-icon-location"></i>
+          <span>导航一</span>
+        </template>
+        <el-menu-item-group>
+          <template slot="title">分组一</template>
+          <el-menu-item index="1-1">选项1</el-menu-item>
+          <el-menu-item index="1-2">选项2</el-menu-item>
+        </el-menu-item-group>
+        <el-menu-item-group title="分组2">
+          <el-menu-item index="1-3">选项3</el-menu-item>
+        </el-menu-item-group>
+        <el-submenu index="1-4">
+          <template slot="title">选项4</template>
+          <el-menu-item index="1-4-1">选项1</el-menu-item>
+        </el-submenu>
+      </el-submenu>
+      <el-menu-item index="2">
+        <i class="el-icon-menu"></i>
+        <span slot="title">导航二</span>
+      </el-menu-item>
+      <el-menu-item index="3">
+        <i class="el-icon-setting"></i>
+        <span slot="title">导航三</span>
+      </el-menu-item>
+    </el-menu>
+      </el-aside>
+      <el-main>Main</el-main>
+    </el-container>
+  </el-container>
 </template>
 
 <script>
 export default {
-    methods: {
-        loginOut () {
-            window.sessionStorage.removeItem("token")
-            console.log("1")
-            this.$router.push('/login')
-        }
-    }
-}
+  methods: {}
+};
 </script>
 
 <style lang="less" scoped>
+.el-container {
+  height: 100%;
+}
+.el-header {
+  background-color: #24292e;
+}
+
+.el-aside {
+  background-color: #fff;
+  height: 100%;
+  border-right: 1px solid #e1e4e8!important;
+}
+.el-main {
+  background-color: #e1e4e8;
+}
 </style>
