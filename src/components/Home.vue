@@ -6,7 +6,7 @@
       <!-- 侧边栏 -->
       <el-aside>
         <!-- 一级菜单 -->
-        <el-menu default-active="2" class="el-menu-vertical-demo">
+        <el-menu default-active="2" class="el-menu-vertical-demo" unique-opened:true>
           <el-submenu :index="item.id + ''" v-for="item in menuList" :key="item.id">
             <template slot="title">
               <i :class="item.menuIcon"></i>
@@ -18,16 +18,23 @@
               :index="subItem.menuId + ''"
               v-for="subItem in item.childMenus"
               :key="subItem.menuId"
+              is-active=true
             >
               <template slot="title">
-                <i :class="subItem.menuIcon"></i>
+                <i :class="subItem.id"></i>
                 <span>{{subItem.menuName}}</span>
               </template>
             </el-menu-item>
           </el-submenu>
         </el-menu>
       </el-aside>
-      <el-main>Main</el-main>
+      <el-main>
+        <div class="main-header">
+          a
+        </div>
+        <div>
+        </div>
+      </el-main>
     </el-container>
   </el-container>
 </template>
@@ -69,16 +76,40 @@ export default {
   background-color: #fff;
   height: 100%;
   border-right: 1px solid #e1e4e8 !important;
+  .el-menu {
+    border-right: none;
+  }
 }
 .el-main {
   background-color: #e1e4e8;
+  padding: 0;
 }
 
 .el-menu-item.is-active {
   color: #3883fa;
 }
 
-i {
-  font-size: 18px;
+.iconfont {
+  margin-right: 10px;
+}
+
+span {
+    font-weight: 700;
+    // color: black;
+}
+.main-header{
+  height: 65px;
+  width: 100%;
+  background-color: #fff;
+  border: 0;
+  margin: 5px;
+  line-height:50px;
+}
+.el-menu-item.is-active {
+  color: #fff;
+  background-color: #333;
+}
+.classA {
+  font-size: 20px;
 }
 </style>
