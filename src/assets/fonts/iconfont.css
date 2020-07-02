@@ -18,17 +18,14 @@
 
 .icon-user:before {
   content: "\e60a";
-  color: seagreen;
 }
 
 .icon-xitong:before {
   content: "\e621";
-  color: black;
 }
 
 .icon-caidan1:before {
   content: "\e604";
-  color: goldenrod;
 }
 
 .icon-mima:before {

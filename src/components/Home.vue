@@ -7,21 +7,21 @@
       <el-aside>
         <!-- 一级菜单 -->
         <el-menu default-active="2" class="el-menu-vertical-demo" unique-opened:true>
-          <el-submenu :index="item.id + ''" v-for="item in menuList" :key="item.id">
+          <el-submenu :index="item.id + ''" v-for="(item,arr) in menuList" :key="item.id">
             <template slot="title">
-              <i :class="item.menuIcon" is-active:iclass></i>
+              <i :class="iclassOne(arr)"></i>
               <span>{{item.menuName}}</span>
             </template>
 
             <!-- 二级菜单 -->
             <el-menu-item
               :index="subItem.menuId + ''"
-              v-for="subItem in item.childMenus"
+              v-for="(subItem,arr) in item.childMenus"
               :key="subItem.menuId"
               is-active=true
             >
               <template slot="title">
-                <i :class="subItem.menuIcon"></i>
+                <i :class="iclassTwo(arr)"></i>
                 <span>{{subItem.menuName}}</span>
               </template>
             </el-menu-item>
@@ -44,7 +44,11 @@ export default {
   data() {
     return {
       // 左侧菜单数据
-      menuList: []
+      menuList: [],
+      iconOne: ["iconfont icon-xitong iconSystem"],
+      // 二级菜单
+      iconTwo: ["iconfont icon-user iconUser",
+      "iconfont icon-caidan1 iconMenu"]
     };
   },
 
@@ -59,6 +63,13 @@ export default {
       }
       this.menuList = res.data;
       console.log(this.menuList);
+    },
+    iclassOne(index) {
+        return this.iconOne[index]
+    },
+    iclassTwo(index) {
+        console.log(index)
+        return this.iconTwo[index]
     }
   }
 };
@@ -109,7 +120,13 @@ span {
   color: #fff;
   background-color: #333;
 }
-.iclass {
-  color: slateblue
+.iconUser {
+  color: seagreen;
+}
+.iconMenu {
+  color: gold;
+}
+.iconSystem {
+  color: darkslategray;
 }
 </style>
