@@ -9,7 +9,7 @@
         <el-menu default-active="2" class="el-menu-vertical-demo" unique-opened:true>
           <el-submenu :index="item.id + ''" v-for="item in menuList" :key="item.id">
             <template slot="title">
-              <i :class="item.menuIcon"></i>
+              <i :class="item.menuIcon" is-active:iclass></i>
               <span>{{item.menuName}}</span>
             </template>
 
@@ -21,7 +21,7 @@
               is-active=true
             >
               <template slot="title">
-                <i :class="subItem.id"></i>
+                <i :class="subItem.menuIcon"></i>
                 <span>{{subItem.menuName}}</span>
               </template>
             </el-menu-item>
@@ -109,7 +109,7 @@ span {
   color: #fff;
   background-color: #333;
 }
-.classA {
-  font-size: 20px;
+.iclass {
+  color: slateblue
 }
 </style>
