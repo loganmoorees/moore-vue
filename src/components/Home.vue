@@ -4,9 +4,16 @@
     <el-header>Header</el-header>
     <el-container>
       <!-- 侧边栏 -->
-      <el-aside>
+      <el-aside :width="isCollapse ? '4%':'17%'">
         <!-- 一级菜单 -->
-        <el-menu default-active="2" class="el-menu-vertical-demo" unique-opened:true>
+        <el-menu
+          :default-active="2"
+          class="el-menu-vertical-demo"
+          unique-opened
+          :collapse="isCollapse"
+          :collapse-transition="false"
+          router
+        >
           <el-submenu :index="item.id + ''" v-for="(item,arr) in menuList" :key="item.id">
             <template slot="title">
               <i :class="iclassOne(arr)"></i>
@@ -18,7 +25,8 @@
               :index="subItem.menuId + ''"
               v-for="(subItem,arr) in item.childMenus"
               :key="subItem.menuId"
-              is-active=true
+              is-active="true"
+              @click="saveNavState('/' + subItem.menuId)"
             >
               <template slot="title">
                 <i :class="iclassTwo(arr)"></i>
@@ -30,10 +38,12 @@
       </el-aside>
       <el-main>
         <div class="main-header">
-          a
+          <span class="button-fold">
+            <i class="iconfont icon-caidan" @click="toggleIcon"></i>
+            <router-view></router-view>
+          </span>
         </div>
-        <div>
-        </div>
+        <div></div>
       </el-main>
     </el-container>
   </el-container>
@@ -47,8 +57,13 @@ export default {
       menuList: [],
       iconOne: ["iconfont icon-xitong iconSystem"],
       // 二级菜单
-      iconTwo: ["iconfont icon-user iconUser",
-      "iconfont icon-caidan1 iconMenu"]
+      iconTwo: [
+        "iconfont icon-user iconUser",
+        "iconfont icon-caidan1 iconMenu"
+      ],
+      // 是否折叠
+      isCollapse: false,
+      activePath: ''
     };
   },
 
@@ -65,11 +80,17 @@ export default {
       console.log(this.menuList);
     },
     iclassOne(index) {
-        return this.iconOne[index]
+      return this.iconOne[index];
     },
     iclassTwo(index) {
-        console.log(index)
-        return this.iconTwo[index]
+      return this.iconTwo[index];
+    },
+    toggleIcon() {
+      this.isCollapse = !this.isCollapse;
+    },
+    saveNavState(activePath) {
+      window.sessionStorage.setItem('activePath', activePath)
+      this.activePath = activePath
     }
   }
 };
@@ -105,16 +126,16 @@ export default {
 }
 
 span {
-    font-weight: 700;
-    // color: black;
+  font-weight: 700;
+  // color: black;
 }
-.main-header{
-  height: 65px;
+.main-header {
+  height: 10%;
   width: 100%;
   background-color: #fff;
   border: 0;
   margin: 5px;
-  line-height:50px;
+  line-height: 50px;
 }
 .el-menu-item.is-active {
   color: #fff;
@@ -128,5 +149,9 @@ span {
 }
 .iconSystem {
   color: darkslategray;
+}
+.button-fold {
+  margin-left: 2%;
+  color: #24292e;
 }
 </style>
