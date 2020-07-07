@@ -22,7 +22,7 @@ const routes = [
     redirect: '/welcome',
     children: [
       { path: '/welcome', component: Welcome },
-      { path: '/2', component: User }
+      { path: '/user', component: User }
     ]
   }
 ]

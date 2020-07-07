@@ -1,13 +1,15 @@
 <template>
   <el-container>
     <!-- 头部 -->
-    <el-header>Header</el-header>
+    <el-header>
+      <i class="iconfont icon-caidan toggle-caidan" @click="toggleIcon"></i>
+    </el-header>
     <el-container>
       <!-- 侧边栏 -->
-      <el-aside :width="isCollapse ? '4%':'17%'">
+      <el-aside :width="isCollapse ? '4%':'12%'" :class="asidePosition">
         <!-- 一级菜单 -->
         <el-menu
-          :default-active="2"
+          default-active="2"
           class="el-menu-vertical-demo"
           unique-opened
           :collapse="isCollapse"
@@ -22,11 +24,11 @@
 
             <!-- 二级菜单 -->
             <el-menu-item
-              :index="subItem.menuId + ''"
+              :index="subItem.menuPath + ''"
               v-for="(subItem,arr) in item.childMenus"
               :key="subItem.menuId"
               is-active="true"
-              @click="saveNavState('/' + subItem.menuId)"
+              @click="saveNavState(subItem.menuPath)"
             >
               <template slot="title">
                 <i :class="iclassTwo(arr)"></i>
@@ -38,12 +40,8 @@
       </el-aside>
       <el-main>
         <div class="main-header">
-          <span class="button-fold">
-            <i class="iconfont icon-caidan" @click="toggleIcon"></i>
-            <router-view></router-view>
-          </span>
+          <router-view></router-view>
         </div>
-        <div></div>
       </el-main>
     </el-container>
   </el-container>
@@ -62,8 +60,10 @@ export default {
         "iconfont icon-caidan1 iconMenu"
       ],
       // 是否折叠
-      isCollapse: false,
-      activePath: ''
+      isCollapse: true,
+      activePath: "",
+      // 左侧折叠位置
+      asidePosition: ''
     };
   },
 
@@ -86,11 +86,17 @@ export default {
       return this.iconTwo[index];
     },
     toggleIcon() {
-      this.isCollapse = !this.isCollapse;
+      if (!this.isCollapse) {
+        this.isCollapse = !this.isCollapse;
+        this.asidePosition = 'aside-right'
+      } else {
+        this.isCollapse = !this.isCollapse;
+        this.asidePosition = 'aside-left'
+      }
     },
     saveNavState(activePath) {
-      window.sessionStorage.setItem('activePath', activePath)
-      this.activePath = activePath
+      window.sessionStorage.setItem("activePath", activePath);
+      this.activePath = activePath;
     }
   }
 };
@@ -110,6 +116,7 @@ export default {
   border-right: 1px solid #e1e4e8 !important;
   .el-menu {
     border-right: none;
+    float: right;
   }
 }
 .el-main {
@@ -130,7 +137,7 @@ span {
   // color: black;
 }
 .main-header {
-  height: 10%;
+  height: 50px;
   width: 100%;
   background-color: #fff;
   border: 0;
@@ -153,5 +160,26 @@ span {
 .button-fold {
   margin-left: 2%;
   color: #24292e;
+}
+.toggle-caidan {
+  font-size: 20px;
+  line-height: 50px;
+  color: aliceblue;
+}
+.aside-left {
+  .el-menu {
+    border-right: none;
+    float:unset;
+  }
+}
+.aside-right {
+  .el-menu {
+    border-right: none;
+    float:right;
+  }
+}
+.el-menu-item:focus, .el-menu-item:hover {
+  background-color: #333;
+  color: #fff;
 }
 </style>
