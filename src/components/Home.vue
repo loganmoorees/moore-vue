@@ -3,13 +3,32 @@
     <!-- 头部 -->
     <el-header>
       <i class="iconfont icon-caidan toggle-caidan" @click="toggleIcon"></i>
+      <span class="user-info">
+        <i class="iconfont icon-remind remind"></i>
+        <el-dropdown trigger="click">
+          <span class="el-dropdown-link">
+            <img src="../assets/images/user.jpg" alt="" class="user-photo" />
+            <i class="el-icon-caret-bottom el-icon--right"></i>
+          </span>
+          <el-dropdown-menu slot="dropdown" class="user-detail">
+            <el-dropdown-item class="clearfix">
+              评论
+              <el-badge class="mark" :value="12" />
+            </el-dropdown-item>
+            <el-dropdown-item class="clearfix">
+              回复
+              <el-badge class="mark" :value="3" />
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </span>
     </el-header>
     <el-container>
       <!-- 侧边栏 -->
       <el-aside :width="isCollapse ? '4%':'12%'" :class="asidePosition">
         <!-- 一级菜单 -->
         <el-menu
-          default-active="2"
+          default-active="activePath"
           class="el-menu-vertical-demo"
           unique-opened
           :collapse="isCollapse"
@@ -39,7 +58,7 @@
         </el-menu>
       </el-aside>
       <el-main>
-        <div class="main-header">
+        <div>
           <router-view></router-view>
         </div>
       </el-main>
@@ -63,12 +82,13 @@ export default {
       isCollapse: true,
       activePath: "",
       // 左侧折叠位置
-      asidePosition: ''
+      asidePosition: ""
     };
   },
 
   created() {
     this.getMenuList();
+    this.activePath = window.sessionStorage.getItem("activePath");
   },
   methods: {
     async getMenuList() {
@@ -88,10 +108,10 @@ export default {
     toggleIcon() {
       if (!this.isCollapse) {
         this.isCollapse = !this.isCollapse;
-        this.asidePosition = 'aside-right'
+        this.asidePosition = "aside-right";
       } else {
         this.isCollapse = !this.isCollapse;
-        this.asidePosition = 'aside-left'
+        this.asidePosition = "aside-left";
       }
     },
     saveNavState(activePath) {
@@ -136,14 +156,6 @@ span {
   font-weight: 700;
   // color: black;
 }
-.main-header {
-  height: 50px;
-  width: 100%;
-  background-color: #fff;
-  border: 0;
-  margin: 5px;
-  line-height: 50px;
-}
 .el-menu-item.is-active {
   color: #fff;
   background-color: #333;
@@ -163,23 +175,53 @@ span {
 }
 .toggle-caidan {
   font-size: 20px;
-  line-height: 50px;
+  line-height: 55px;
   color: aliceblue;
 }
 .aside-left {
   .el-menu {
     border-right: none;
-    float:unset;
+    float: unset;
   }
 }
 .aside-right {
   .el-menu {
     border-right: none;
-    float:right;
+    float: right;
   }
 }
-.el-menu-item:focus, .el-menu-item:hover {
+.el-menu-item:focus,
+.el-menu-item:hover {
   background-color: #333;
   color: #fff;
+}
+.remind {
+  color: #fff;
+  font-size: 18px;
+  line-height: 55px;
+  margin-right: 40px;
+  font-weight: 400;
+}
+.remind:hover {
+  color: #8a8a8a;
+  font-size: 18px;
+}
+.user-photo {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  margin: 0 auto;
+  // display: inline-block;
+  vertical-align: middle;
+  background-position-x: right;
+  margin-top: -5px;
+  margin-right: 10px;
+  font-weight: 400;
+}
+.user-info {
+  float: right;
+}
+.el-popper[x-placement^=bottom] {
+    margin-top: 19px;
 }
 </style>

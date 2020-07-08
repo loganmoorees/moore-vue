@@ -4,6 +4,7 @@ import Login from '../components/Login.vue'
 import Home from '../components/Home.vue'
 import Welcome from '../components/Welcome.vue'
 import User from '../components/system/User.vue'
+import Menu from '../components/system/Menu.vue'
 
 Vue.use(VueRouter)
 
@@ -22,7 +23,8 @@ const routes = [
     redirect: '/welcome',
     children: [
       { path: '/welcome', component: Welcome },
-      { path: '/user', component: User }
+      { path: '/user', component: User },
+      { path: '/menu', component: Menu }
     ]
   }
 ]
@@ -39,5 +41,10 @@ router.beforeEach((to, from, next) => {
   if (!tokenStr) return next('/login')
   next();
 })
+
+const originalPush = VueRouter.prototype.push;
+VueRouter.prototype.push = function push(location) {
+    return originalPush.call(this, location).catch(err => err)
+};
 
 export default router
