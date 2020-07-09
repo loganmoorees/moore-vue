@@ -12,12 +12,11 @@
           </span>
           <el-dropdown-menu slot="dropdown" class="user-detail">
             <el-dropdown-item class="clearfix">
-              评论
-              <el-badge class="mark" :value="12" />
+              个人信息
+              <!-- <el-badge class="mark" :value="12" /> -->
             </el-dropdown-item>
-            <el-dropdown-item class="clearfix">
-              回复
-              <el-badge class="mark" :value="3" />
+            <el-dropdown-item class="clearfix" @click.native="loginOut">
+              退出登录
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -117,6 +116,11 @@ export default {
     saveNavState(activePath) {
       window.sessionStorage.setItem("activePath", activePath);
       this.activePath = activePath;
+    },
+    loginOut() {
+      console.log("退出")
+      window.sessionStorage.removeItem("token");
+      this.$router.push('/login')
     }
   }
 };
