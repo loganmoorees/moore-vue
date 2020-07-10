@@ -7,7 +7,7 @@
         <i class="iconfont icon-remind remind"></i>
         <el-dropdown trigger="click">
           <span class="el-dropdown-link">
-            <img src="../assets/images/user.jpg" alt="" class="user-photo" />
+            <img src="../assets/images/user.jpg" alt class="user-photo" />
             <i class="el-icon-caret-bottom el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown" class="user-detail">
@@ -15,9 +15,7 @@
               个人信息
               <!-- <el-badge class="mark" :value="12" /> -->
             </el-dropdown-item>
-            <el-dropdown-item class="clearfix" @click.native="loginOut">
-              退出登录
-            </el-dropdown-item>
+            <el-dropdown-item class="clearfix" @click.native="loginOut">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </span>
@@ -33,26 +31,59 @@
           :collapse="isCollapse"
           :collapse-transition="false"
           router
+          :index="item.id + ''"
+          v-for="(item,arr) in menuList"
+          :key="item.id"
         >
-          <el-submenu :index="item.id + ''" v-for="(item,arr) in menuList" :key="item.id">
+          <el-submenu :index="item.id + ''">
             <template slot="title">
               <i :class="iclassOne(arr)"></i>
               <span>{{item.menuName}}</span>
             </template>
 
             <!-- 二级菜单 -->
-            <el-menu-item
-              :index="subItem.menuPath + ''"
-              v-for="(subItem,arr) in item.childMenus"
-              :key="subItem.menuId"
-              is-active="true"
-              @click="saveNavState(subItem.menuPath)"
-            >
-              <template slot="title">
-                <i :class="iclassTwo(arr)"></i>
-                <span>{{subItem.menuName}}</span>
-              </template>
-            </el-menu-item>
+            <el-menu-item-group>
+              <el-menu-item
+                  v-for="(subItem,menuArr) in subItem.childMenus"
+                  v-if="item.childMenus === 'null'"
+                  :key="subItem.menuId"
+                  :index="menuArr + ''"
+                  is-active="true"
+                >
+                  <template>
+                    <span>{{child.menuName}}</span>
+                  </template>
+                </el-menu-item>
+
+              <el-submenu
+                :index="subItem.menuId + ''"
+                v-for="(subItem,arr) in item.childMenus"
+                :key="subItem.menuId"
+                is-active="true"
+                unique-opened
+                class="el-menu-vertical-demo"
+                @click="saveNavState(subItem.menuPath)"
+              >
+                <template slot="title">
+                  <i :class="iclassTwo(arr)"></i>
+                  <span>{{subItem.menuName}}</span>
+                </template>
+
+                <!-- 三级菜单 -->
+                <el-menu-item
+                  v-for="(child,menuArr) in subItem.childMenus"
+                  :key="child.menuId"
+                  :index="menuArr + ''"
+                  is-active="true"
+                >
+                  <template>
+                    <span>{{child.menuName}}</span>
+                  </template>
+                </el-menu-item>
+                <!-- 三级菜单结束 -->
+              </el-submenu>
+            </el-menu-item-group>
+            <!-- 二级菜单结束 -->
           </el-submenu>
         </el-menu>
       </el-aside>
@@ -81,7 +112,8 @@ export default {
       isCollapse: true,
       activePath: "",
       // 左侧折叠位置
-      asidePosition: ""
+      asidePosition: "",
+      openends: ["1"]
     };
   },
 
@@ -118,9 +150,9 @@ export default {
       this.activePath = activePath;
     },
     loginOut() {
-      console.log("退出")
+      console.log("退出");
       window.sessionStorage.removeItem("token");
-      this.$router.push('/login')
+      this.$router.push("/login");
     }
   }
 };
@@ -225,7 +257,7 @@ span {
 .user-info {
   float: right;
 }
-.el-popper[x-placement^=bottom] {
-    margin-top: 19px;
+.el-popper[x-placement^="bottom"] {
+  margin-top: 19px;
 }
 </style>
