@@ -43,39 +43,38 @@
 
             <!-- 二级菜单 -->
             <el-menu-item-group>
-              <div v-for="(subItem,arr) in item.childMenus"
-                :key="subItem.menuId">
-              <el-submenu
-                :index="subItem.menuPath + ''"
-                v-if="subItem.childMenus != null"
-                is-active="true"
-                unique-opened
-                class="el-menu-vertical-demo"
-                @click="saveNavState(subItem.menuPath)"
-              >
-                <template slot="title">
-                  <i :class="iclassTwo(arr)"></i>
-                  <span>{{subItem.menuName}}</span>
-                </template>
-
-                <!-- 三级菜单 -->
-                <el-menu-item
-                  v-for="(child,menuArr) in subItem.childMenus"
-                  :key="child.menuId"
-                  :index="menuArr + ''"
+              <div v-for="(subItem,arr) in item.childMenus" :key="subItem.menuId">
+                <el-submenu
+                  :index="subItem.menuPath + ''"
+                  v-if="subItem.childMenus != null"
                   is-active="true"
+                  unique-opened
+                  class="el-menu-vertical-demo"
+                  @click="saveNavState(subItem.menuPath)"
                 >
-                  <template>
-                    <span>{{child.menuName}}</span>
-                  </template>
-                </el-menu-item>
-                <!-- 三级菜单结束 -->
-              </el-submenu>
-              <el-menu-item v-if="subItem.childMenus == null" :index="subItem.menuPath">
-                <template>
+                  <template slot="title">
+                    <i :class="iclassTwo(arr)"></i>
                     <span>{{subItem.menuName}}</span>
                   </template>
-              </el-menu-item>
+
+                  <!-- 三级菜单 -->
+                  <el-menu-item
+                    v-for="(child,menuArr) in subItem.childMenus"
+                    :key="child.menuId"
+                    :index="menuArr + ''"
+                    is-active="true"
+                  >
+                    <template>
+                      <span>{{child.menuName}}</span>
+                    </template>
+                  </el-menu-item>
+                  <!-- 三级菜单结束 -->
+                </el-submenu>
+                <el-menu-item v-if="subItem.childMenus == null" :index="subItem.menuPath">
+                  <template>
+                    <span>{{subItem.menuName}}</span>
+                  </template>
+                </el-menu-item>
               </div>
             </el-menu-item-group>
             <!-- 二级菜单结束 -->
@@ -153,102 +152,5 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
-.el-container {
-  height: 100%;
-}
-.el-header {
-  background-color: #24292e;
-}
-
-.el-aside {
-  background-color: #fff;
-  height: 100%;
-  border-right: 1px solid #e1e4e8 !important;
-  .el-menu {
-    border-right: none;
-    float: right;
-  }
-}
-.el-main {
-  background-color: #e1e4e8;
-  padding: 0;
-}
-
-.iconfont {
-  margin-right: 10px;
-}
-
-span {
-  font-weight: 700;
-  // color: black;
-}
-.el-menu-item.is-active {
-  color: #fff;
-  background-color: #333;
-}
-.iconUser {
-  color: seagreen;
-}
-.iconMenu {
-  color: gold;
-}
-.iconSystem {
-  color: darkslategray;
-}
-.button-fold {
-  margin-left: 2%;
-  color: #24292e;
-}
-.toggle-caidan {
-  font-size: 20px;
-  line-height: 55px;
-  color: aliceblue;
-}
-.aside-left {
-  .el-menu {
-    border-right: none;
-    float: unset;
-  }
-}
-.aside-right {
-  .el-menu {
-    border-right: none;
-    float: right;
-  }
-}
-.el-menu-item:focus,
-.el-menu-item:hover {
-  background-color: #333;
-  color: #fff;
-}
-.remind {
-  color: #fff;
-  font-size: 18px;
-  line-height: 55px;
-  margin-right: 40px;
-  font-weight: 400;
-}
-.remind:hover {
-  color: #8a8a8a;
-  font-size: 18px;
-}
-.user-photo {
-  height: 30px;
-  width: 30px;
-  border-radius: 50%;
-  margin: 0 auto;
-  // display: inline-block;
-  vertical-align: middle;
-  background-position-x: right;
-  margin-top: -5px;
-  margin-right: 10px;
-  font-weight: 400;
-}
-.user-info {
-  float: right;
-}
-.el-popper[x-placement^="bottom"] {
-  margin-top: 19px;
-}
+<style scoped src="../assets/css/home.css">
 </style>
