@@ -43,22 +43,11 @@
 
             <!-- 二级菜单 -->
             <el-menu-item-group>
-              <el-menu-item
-                  v-for="(subItem,menuArr) in subItem.childMenus"
-                  v-if="item.childMenus === 'null'"
-                  :key="subItem.menuId"
-                  :index="menuArr + ''"
-                  is-active="true"
-                >
-                  <template>
-                    <span>{{child.menuName}}</span>
-                  </template>
-                </el-menu-item>
-
+              <div v-for="(subItem,arr) in item.childMenus"
+                :key="subItem.menuId">
               <el-submenu
-                :index="subItem.menuId + ''"
-                v-for="(subItem,arr) in item.childMenus"
-                :key="subItem.menuId"
+                :index="subItem.menuPath + ''"
+                v-if="subItem.childMenus != null"
                 is-active="true"
                 unique-opened
                 class="el-menu-vertical-demo"
@@ -82,6 +71,12 @@
                 </el-menu-item>
                 <!-- 三级菜单结束 -->
               </el-submenu>
+              <el-menu-item v-if="subItem.childMenus == null" :index="subItem.menuPath">
+                <template>
+                    <span>{{subItem.menuName}}</span>
+                  </template>
+              </el-menu-item>
+              </div>
             </el-menu-item-group>
             <!-- 二级菜单结束 -->
           </el-submenu>
@@ -178,10 +173,6 @@ export default {
 .el-main {
   background-color: #e1e4e8;
   padding: 0;
-}
-
-.el-menu-item.is-active {
-  color: #3883fa;
 }
 
 .iconfont {
