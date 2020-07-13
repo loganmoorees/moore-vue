@@ -22,7 +22,7 @@
     </el-header>
     <el-container>
       <!-- 侧边栏 -->
-      <el-aside :width="isCollapse ? '4%':'12%'" :class="asidePosition">
+      <el-aside :width="isCollapse ? '4%':'15%'" :class="asidePosition">
         <!-- 一级菜单 -->
         <el-menu
           default-active="activePath"
@@ -42,8 +42,7 @@
             </template>
 
             <!-- 二级菜单 -->
-            <el-menu-item-group>
-              <div v-for="(subItem,arr) in item.childMenus" :key="subItem.menuId">
+              <div v-for="(subItem,subArr) in item.childMenus" :key="subItem.menuId">
                 <el-submenu
                   :index="subItem.menuPath + ''"
                   v-if="subItem.childMenus != null"
@@ -53,10 +52,15 @@
                   @click="saveNavState(subItem.menuPath)"
                 >
                   <template slot="title">
-                    <i :class="iclassTwo(arr)"></i>
+                    <i :class="iclassTwo(subArr)"></i>
                     <span>{{subItem.menuName}}</span>
                   </template>
-
+                  <!-- <el-menu-item v-if="subItem.childMenus == null">
+                    <template slot="title">
+                    <i :class="iclassTwo(subArr)"></i>
+                    <span>{{subItem.menuName}}</span>
+                  </template>
+                  </el-menu-item> -->
                   <!-- 三级菜单 -->
                   <el-menu-item
                     v-for="(child,menuArr) in subItem.childMenus"
@@ -70,13 +74,13 @@
                   </el-menu-item>
                   <!-- 三级菜单结束 -->
                 </el-submenu>
-                <el-menu-item v-if="subItem.childMenus == null" :index="subItem.menuPath">
+                <el-menu-item v-if="subItem.childMenus == null" :index="subArr + ''">
                   <template>
+                    <i :class="iclassTwo(subArr)"></i>
                     <span>{{subItem.menuName}}</span>
                   </template>
                 </el-menu-item>
               </div>
-            </el-menu-item-group>
             <!-- 二级菜单结束 -->
           </el-submenu>
         </el-menu>
@@ -96,11 +100,27 @@ export default {
     return {
       // 左侧菜单数据
       menuList: [],
-      iconOne: ["iconfont icon-xitong iconSystem"],
+      iconOne: [
+        "iconfont icon-data iconSystem",
+        "iconfont icon-heiban iconHeiban",
+        "iconfont icon-shengchanqiye iconShengchan",
+        "iconfont icon-caigoudingdan iconCaigou",
+        "iconfont icon-kccx iconKccx",
+        "iconfont icon-xitong",
+        "iconfont icon-feiyongduoweifenxi iconFeiyong"
+      ],
       // 二级菜单
       iconTwo: [
-        "iconfont icon-user iconUser",
-        "iconfont icon-caidan1 iconMenu"
+        "iconfont icon-rili",
+        "iconfont icon-rili1",
+        "iconfont icon-rili3",
+        "iconfont icon-rili2",
+        "iconfont icon-rili4",
+        "iconfont icon-rili11",
+        "iconfont icon-rili5",
+        "iconfont icon-rili6",
+        "iconfont icon-rili8",
+        "iconfont icon-rili10"
       ],
       // 是否折叠
       isCollapse: true,
