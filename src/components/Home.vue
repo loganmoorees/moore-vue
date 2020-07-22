@@ -22,7 +22,7 @@
     </el-header>
     <el-container>
       <!-- 侧边栏 -->
-      <el-aside :width="isCollapse ? '4%':'15%'" :class="asidePosition">
+      <el-aside :width="isCollapse ? '3%':'12%'" :class="asidePosition">
         <!-- 一级菜单 -->
         <el-menu
           default-active="activePath"
@@ -74,7 +74,7 @@
                   </el-menu-item>
                   <!-- 三级菜单结束 -->
                 </el-submenu>
-                <el-menu-item v-if="subItem.childMenus == null" :index="subArr + ''">
+                <el-menu-item v-if="subItem.childMenus == null" :index="subItem.menuPath">
                   <template>
                     <i :class="iclassTwo(subArr)"></i>
                     <span>{{subItem.menuName}}</span>

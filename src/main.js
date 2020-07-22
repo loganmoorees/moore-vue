@@ -6,7 +6,7 @@ import './assets/css/global.css'
 import './assets/fonts/iconfont.css'
 import axios from 'axios'
 
-axios.defaults.baseURL = 'http://49.235.208.185:8080/'
+axios.defaults.baseURL = 'http://49.235.208.185:8070/'
 // 49.235.208.185
 axios.interceptors.request.use(config => {
   config.headers.token = window.sessionStorage.getItem('token')

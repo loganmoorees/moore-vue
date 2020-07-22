@@ -62,6 +62,9 @@
       float: unset;
     }
   }
+  .el-menu {
+    border-right: none;
+  }
   .aside-right {
     .el-menu {
       border-right: none;
