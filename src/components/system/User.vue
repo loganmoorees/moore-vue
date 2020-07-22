@@ -7,39 +7,29 @@
     <el-card class="card">
       <!-- 导航菜单 -->
       <div>
-        <el-row class="tac">
-          <el-col :span="5">
-            <h5>默认颜色</h5>
-            <el-menu
-              default-active="2"
-              class="el-menu-vertical-demo"
-              @open="handleOpen"
-              @close="handleClose"
-            >
-              <el-submenu index="1">
-                <template slot="title">
-                  <i class="el-icon-location"></i>
-                  <span>导航一</span>
-                </template>
-                <el-submenu index="1-4">
-                  <template slot="title">选项4</template>
-                  <el-menu-item index="1-4-1">选项1</el-menu-item>
-                </el-submenu>
-              </el-submenu>
-
-              <el-submenu index="2">
-                <template slot="title">
-                  <i class="el-icon-location"></i>
-                  <span>导航一</span>
-                </template>
-                <el-submenu index="2-4">
-                  <template slot="title">选项4</template>
-                  <el-menu-item index="2-4-1">选项1</el-menu-item>
-                </el-submenu>
-              </el-submenu>
-            </el-menu>
-          </el-col>
-        </el-row>
+        <template>
+          <a-tree-select
+            v-model="value"
+            show-search
+            style="width: 100%"
+            :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
+            placeholder="Please select"
+            allow-clear
+            tree-default-expand-all
+          >
+            <a-tree-select-node key="0-1" value="parent 1" title="parent 1">
+              <a-tree-select-node key="0-1-1" value="parent 1-0" title="parent 1-0">
+                <a-tree-select-node key="random" :selectable="false" value="leaf1" title="my leaf" />
+                <a-tree-select-node key="random1" value="leaf2" title="your leaf" />
+              </a-tree-select-node>
+              <a-tree-select-node key="random2" value="parent 1-1" title="parent 1-1">
+                <a-tree-select-node key="random3" value="sss">
+                  <b slot="title" style="color: #08c">sss</b>
+                </a-tree-select-node>
+              </a-tree-select-node>
+            </a-tree-select-node>
+          </a-tree-select>
+        </template>
       </div>
       <!-- 结束 -->
     </el-card>
@@ -48,15 +38,13 @@
 
 <script>
 export default {
-  methods: {
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
-    },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
+  data() {
+    return {
+      treeExpandedKeys: [],
+      value: undefined
     }
   }
-};
+}
 </script>
 
 <style lang="less" scoped>

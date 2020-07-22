@@ -5,6 +5,10 @@ import {
     MenuItemGroup, MenuItem, Breadcrumb, BreadcrumbItem,
     Card, DropdownMenu, DropdownItem, Dropdown, Badge
 } from 'element-ui'
+// 引入Ant Design Vue组件
+import Antd from 'ant-design-vue'
+// 引入Ant Design Vue样式
+import 'ant-design-vue/dist/antd.css'
 
 Vue.use(Button)
 Vue.use(Form)
@@ -28,3 +32,5 @@ Vue.use(DropdownMenu)
 Vue.use(DropdownItem)
 Vue.use(Badge)
 Vue.prototype.$message = Message
+// ant-design导入区域
+Vue.use(Antd)
