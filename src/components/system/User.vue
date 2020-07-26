@@ -6,35 +6,38 @@
     </el-breadcrumb>
     <el-card class="card">
       <!-- 导航菜单 -->
-      <div style="width: 20%">
-        <!-- <template>
-          <a-directory-tree multiple default-expand-all @select="onSelect" @expand="onExpand">
-            <a-tree-node v-for="(item,arr) in treeList" :key="arr" :title="item.name">
-              <a-tree-node v-for="(itemSub,itemArr) in item.childMenu" :key="itemArr" :title="itemSub.name" is-leaf />
-            </a-tree-node>
-          </a-directory-tree>
-        </template> -->
+      <div>
         <template>
-      <template>
-  <a-tree show-line :default-expanded-keys="['0-0-0']" @select="onSelect">
-    <a-icon slot="switcherIcon" type="down" />
-    <a-tree-node key="0-0" title="parent 1">
-      <a-tree-node key="0-0-0" title="parent 1-0">
-        <a-tree-node key="0-0-0-0" title="leaf" />
-        <a-tree-node key="0-0-0-1" title="leaf" />
-        <a-tree-node key="0-0-0-2" title="leaf" />
-      </a-tree-node>
-      <a-tree-node key="0-0-1" title="parent 1-1">
-        <a-tree-node key="0-0-1-0" title="leaf" />
-      </a-tree-node>
-      <a-tree-node key="0-0-2" title="parent 1-2">
-        <a-tree-node key="0-0-2-0" title="leaf" />
-        <a-tree-node key="0-0-2-1" title="leaf" />
-      </a-tree-node>
-    </a-tree-node>
-  </a-tree>
-</template>
-</template>
+          <a-tabs default-active-key="2" v-for="topItem in treeList" :key="topItem.treeId">
+            <a-tab-pane v-for="subItem in topItem.childMenu" :key="subItem.treeId">
+              <span slot="tab">
+                <a-icon type="apple" />{{subItem.name}}
+              </span>
+              <!-- 底层菜单 -->
+              <template>
+                <div style="width: 300px">
+                  <a-input-search style="margin-bottom: 8px" placeholder="Search" @change="onChange" />
+                  <a-tree
+                    :expanded-keys="expandedKeys"
+                    :auto-expand-parent="autoExpandParent"
+                    :tree-data="gData"
+                    @expand="onExpand"
+                  >
+                    <template slot="title" slot-scope="{ title }">
+                      <span v-if="title.indexOf(searchValue) > -1">
+                        {{ title.substr(0, title.indexOf(searchValue)) }}
+                        <span style="color: #f50">{{ searchValue }}</span>
+                        {{ title.substr(title.indexOf(searchValue) + searchValue.length) }}
+                      </span>
+                      <span v-else>{{ title }}</span>
+                    </template>
+                  </a-tree>
+                </div>
+              </template>
+              <!-- 底层菜单 -->
+            </a-tab-pane>
+          </a-tabs>
+        </template>
       </div>
       <!-- 结束 -->
     </el-card>
@@ -42,39 +45,99 @@
 </template>
 
 <script>
+const x = 3;
+const y = 2;
+const z = 1;
+const gData = [];
+
+const generateData = (_level, _preKey, _tns) => {
+  const preKey = _preKey || '0';
+  const tns = _tns || gData;
+
+  const children = [];
+  for (let i = 0; i < x; i++) {
+    const key = `${preKey}-${i}`;
+    tns.push({ title: key, key, scopedSlots: { title: 'title' } });
+    if (i < y) {
+      children.push(key);
+    }
+  }
+  if (_level < 0) {
+    return tns;
+  }
+  const level = _level - 1;
+  children.forEach((key, index) => {
+    tns[index].children = [];
+    return generateData(level, key, tns[index].children);
+  });
+};
+generateData(z);
+
+const dataList = [];
+const generateList = data => {
+  for (let i = 0; i < data.length; i++) {
+    const node = data[i];
+    const key = node.key;
+    dataList.push({ key, title: key });
+    if (node.children) {
+      generateList(node.children);
+    }
+  }
+};
+generateList(gData);
+
+const getParentKey = (key, tree) => {
+  let parentKey;
+  for (let i = 0; i < tree.length; i++) {
+    const node = tree[i];
+    if (node.children) {
+      if (node.children.some(item => item.key === key)) {
+        parentKey = node.key;
+      } else if (getParentKey(key, node.children)) {
+        parentKey = getParentKey(key, node.children);
+      }
+    }
+  }
+  return parentKey;
+};
 export default {
   data() {
     return {
       treeList: [],
-      treeData: [
-        {
-          title: 'parent 1',
-          key: '0-0',
-          slots: {
-            icon: 'smile'
-          },
-          children: [
-            { title: 'leaf', key: '0-0-0', slots: { icon: 'iconfont icon-caidan' } },
-            { title: 'leaf', key: '0-0-1', scopedSlots: { icon: 'custom' } }
-          ]
-        }
-      ]
-    }
+      expandedKeys: [],
+      searchValue: '',
+      autoExpandParent: true,
+      gData
+    };
   },
   methods: {
-    onSelect(selectedKeys, info) {
-      console.log('selected', selectedKeys, info);
-    },
-    onCheck(checkedKeys, info) {
-      console.log('onCheck', checkedKeys, info);
-    },
+      onExpand(expandedKeys) {
+        this.expandedKeys = expandedKeys;
+        this.autoExpandParent = false;
+      },
+      onChange(e) {
+        const value = e.target.value;
+        const expandedKeys = this.treeList
+          .map(item => {
+            if (item.title.indexOf(value) > -1) {
+              return getParentKey(item.treeId, item.name);
+            }
+            return null;
+          })
+          .filter((item, i, self) => item && self.indexOf(item) === i);
+        Object.assign(this, {
+          expandedKeys,
+          searchValue: value,
+          autoExpandParent: true
+        });
+      },
     async getProductType() {
       const { data: res } = await this.$http.get("product/type");
       if (res.code !== 200) {
         return this.$message.error("货品分类获取失败");
       }
-      console.log(res.data)
-      // this.treeList = res.data
+      console.log(res.data);
+      this.treeList = res.data;
     }
   },
   created() {
@@ -90,5 +153,8 @@ export default {
 }
 .card {
   margin-top: 20px;
+}
+::-webkit-scrollbar {
+  display: none;
 }
 </style>

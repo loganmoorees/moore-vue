@@ -31,6 +31,8 @@ Vue.use(Dropdown)
 Vue.use(DropdownMenu)
 Vue.use(DropdownItem)
 Vue.use(Badge)
+// Vue.use(Collapse)
+// Vue.use(CollapseItem)
 Vue.prototype.$message = Message
 // ant-design导入区域
 Vue.use(Antd)
