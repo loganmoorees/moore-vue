@@ -26,7 +26,7 @@
                   <!-- selectedKeys是选中项key的集合，expandedKeys是展开项key的集合 -->
                   <a-tree
                     v-model="checkedKeys"
-                    :treeData="treeData"
+                    :treeData="treeList"
                     :selectedKeys="selectedKeys"
                     :expandedKeys="expandedKeys"
                     @expand="onExpand"
@@ -54,104 +54,58 @@
 
 <script>
 const treeData = [
-  {
-    name: "Hello",
-    key: "0-0",
-    scopedSlots: { title: "title" },
-    children: [
-      {
-        name: "0-0-0",
-        key: "0-0-0",
-        scopedSlots: { title: "title" },
-        children: [
-          {
-            name: "0-0-0-0",
-            key: "0-0-0-0",
-            scopedSlots: { title: "title" },
-            children: [
-              {
-                name: "0-0-0-0-0",
-                key: "0-0-0-0-0",
-                scopedSlots: { title: "title" },
-                children: [
-                  {
-                    name: "0-0-0-0-0-0",
-                    key: "0-0-0-0-0-0",
-                    scopedSlots: { title: "title" }
-                  },
-                  {
-                    name: "0-0-0-0-0-1",
-                    key: "0-0-0-0-0-1",
-                    scopedSlots: { title: "title" }
-                  }
-                ]
-              },
-              {
-                name: "0-0-0-0-1",
-                key: "0-0-0-0-1",
-                scopedSlots: { title: "title" },
-                children: [
-                  {
-                    name: "0-0-0-0-1-0",
-                    key: "0-0-0-0-1-0",
-                    scopedSlots: { title: "title" }
-                  },
-                  {
-                    name: "0-0-0-0-1-1",
-                    key: "0-0-0-0-1-1",
-                    scopedSlots: { title: "title" }
-                  }
-                ]
-              },
-              {
-                name: "0-0-0-0-2",
-                key: "0-0-0-0-2",
-                scopedSlots: { title: "title" }
-              }
-            ]
-          },
-          { name: "0-0-0-1", key: "0-0-0-1", scopedSlots: { title: "title" } },
-          { name: "0-0-0-2", key: "0-0-0-2", scopedSlots: { title: "title" } }
-        ]
-      },
-      {
-        name: "0-0-1",
-        key: "0-0-1",
-        scopedSlots: { title: "title" },
-        children: [
-          { name: "0-0-1-0", key: "0-0-1-0", scopedSlots: { title: "title" } },
-          { name: "0-0-1-1", key: "0-0-1-1", scopedSlots: { title: "title" } },
-          { name: "0-0-1-2", key: "0-0-1-2", scopedSlots: { title: "title" } }
-        ]
-      },
-      {
-        name: "0-0-2",
-        key: "0-0-2",
-        scopedSlots: { title: "title" }
-      }
-    ]
-  },
-  {
-    name: "0-1",
-    scopedSlots: { title: "title" },
-    key: "0-1",
-    children: [
-      { name: "0-1-0-0", key: "0-1-0-0", scopedSlots: { title: "title" } },
-      { name: "0-1-0-1", key: "0-1-0-1", scopedSlots: { title: "title" } },
-      { name: "0-1-0-2", key: "0-1-0-2", scopedSlots: { title: "title" } }
-    ]
-  },
-  {
-    name: "0-2",
-    key: "0-2",
-    scopedSlots: { title: "title" }
-  }
+  // {
+  //   name: "Hello",
+  //   key: "0-0",
+  //   scopedSlots: { title: "title" },
+  //   children: [
+  //     {
+  //       name: "0-0-0",
+  //       key: "0-0-0",
+  //       scopedSlots: { title: "title" },
+  //       children: [
+  //         { name: "0-0-0-1", key: "0-0-0-1", scopedSlots: { title: "title" } },
+  //         { name: "0-0-0-2", key: "0-0-0-2", scopedSlots: { title: "title" } }
+  //       ]
+  //     },
+  //     {
+  //       name: "0-0-1",
+  //       key: "0-0-1",
+  //       scopedSlots: { title: "title" },
+  //       children: [
+  //         { name: "0-0-1-0", key: "0-0-1-0", scopedSlots: { title: "title" } },
+  //         { name: "0-0-1-1", key: "0-0-1-1", scopedSlots: { title: "title" } },
+  //         { name: "0-0-1-2", key: "0-0-1-2", scopedSlots: { title: "title" } }
+  //       ]
+  //     },
+  //     {
+  //       name: "0-0-2",
+  //       key: "0-0-2",
+  //       scopedSlots: { title: "title" }
+  //     }
+  //   ]
+  // },
+  // {
+  //   name: "0-1",
+  //   scopedSlots: { title: "title" },
+  //   key: "0-1",
+  //   children: [
+  //     { name: "0-1-0-0", key: "0-1-0-0", scopedSlots: { title: "title" } },
+  //     { name: "0-1-0-1", key: "0-1-0-1", scopedSlots: { title: "title" } },
+  //     { name: "0-1-0-2", key: "0-1-0-2", scopedSlots: { title: "title" } }
+  //   ]
+  // },
+  // {
+  //   name: "0-2",
+  //   key: "0-2",
+  //   scopedSlots: { title: "title" }
+  // }
 ];
 export default {
   data() {
     return {
       treeList: [],
-      replaceFields: { title: "name" },
+      replaceFields: { title: "name", key: "treeId", children: 'childMenu' },
       expandedKeys: [],
       backupsExpandedKeys: [],
       autoExpandParent: false,
@@ -176,11 +130,11 @@ export default {
         vm.expandedKeys = [];
         vm.backupsExpandedKeys = [];
         //  获取所有存在searchValue的节点
-        const candidateKeysList = vm.getkeyList(vm.searchValue, vm.treeData, []);
+        const candidateKeysList = vm.getkeyList(vm.searchValue, vm.treeList, []);
         //  遍历满足条件的所有节点
         candidateKeysList.map((item) => {
           //  获取每个节点的母亲节点
-          var key = vm.getParentKey(item, vm.treeData);
+          var key = vm.getParentKey(item, vm.treeList);
           //  当item是最高一级，父key为undefined，将不放入到数组中
           //  如果母亲已存在于数组中，也不放入到数组中
           if (key && !vm.backupsExpandedKeys.some((item) => item === key));
@@ -188,7 +142,7 @@ export default {
         });
         const length = this.backupsExpandedKeys.length;
         for (let i = 0; i < length; i++) {
-          vm.getAllParentKey(vm.backupsExpandedKeys[i], vm.treeData);
+          vm.getAllParentKey(vm.backupsExpandedKeys[i], vm.treeList);
         }
         vm.expandedKeys = vm.backupsExpandedKeys.slice();
       }
@@ -202,8 +156,8 @@ export default {
           keyList.push(node.key);
         }
         //  如果拥有孩子继续遍历
-        if (node.children) {
-          this.getkeyList(value, node.children, keyList);
+        if (node.childMenu) {
+          this.getkeyList(value, node.childMenu, keyList);
         }
       }
       //  因为是引用类型，所有每次递归操作的都是同一个数组
@@ -215,12 +169,12 @@ export default {
       //  遍历同级节点
       for (let i = 0; i < tree.length; i++) {
         const node = tree[i];
-        if (node.children) {
+        if (node.childMenu) {
           //  如果该节点的孩子中存在该key值，则该节点就是我们要找的父亲节点
           //  如果不存在，继续遍历其子节点
-          if (node.children.some((item) => item.key === key)) {
+          if (node.childMenu.some((item) => item.key === key)) {
             parentKey = node.key;
-          } else if ((temp = this.getParentKey(key, node.children))) {
+          } else if ((temp = this.getParentKey(key, node.childMenu))) {
             //  parentKey = this.getParentKey(key,node.children)
             //  改进，避免二次遍历
             parentKey = temp;
