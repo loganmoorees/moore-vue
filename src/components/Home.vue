@@ -22,7 +22,7 @@
     </el-header>
     <template style="margin-top: 60px">
       <!-- 侧边栏 -->
-      <el-aside :width="isCollapse ? '60px':'200px'" :class="asidePosition" style="position: absolute;margin-top: 60px;margin-bottom: -60px">
+      <el-aside :width="isCollapse ? '60px':'200px'" :class="asidePosition" style="position: fixed;top: 60px;margin-bottom:-60px;">
         <!-- 一级菜单 -->
         <el-menu
           default-active="activePath"
