@@ -20,9 +20,9 @@
         </el-dropdown>
       </span>
     </el-header>
-    <el-container>
+    <template style="margin-top: 60px">
       <!-- 侧边栏 -->
-      <el-aside :width="isCollapse ? '3%':'12%'" :class="asidePosition">
+      <el-aside :width="isCollapse ? '60px':'200px'" :class="asidePosition" style="position: absolute;margin-top: 60px;margin-bottom: -60px">
         <!-- 一级菜单 -->
         <el-menu
           default-active="activePath"
@@ -85,12 +85,12 @@
           </el-submenu>
         </el-menu>
       </el-aside>
-      <el-main>
+      <el-main :style="mainStyle">
         <div>
           <router-view></router-view>
         </div>
       </el-main>
-    </el-container>
+    </template>
   </el-container>
 </template>
 
@@ -127,7 +127,8 @@ export default {
       activePath: "",
       // 左侧折叠位置
       asidePosition: "",
-      openends: ["1"]
+      openends: ["1"],
+      mainStyle: 'padding-left: 80px'
     };
   },
 
@@ -154,9 +155,11 @@ export default {
       if (!this.isCollapse) {
         this.isCollapse = !this.isCollapse;
         this.asidePosition = "aside-right";
+        this.mainStyle = 'padding-left: 80px';
       } else {
+        this.mainStyle = '';
         this.isCollapse = !this.isCollapse;
-        this.asidePosition = "aside-left";
+        this.mainStyle = " padding-left: 220px";
       }
     },
     saveNavState(activePath) {
@@ -173,4 +176,10 @@ export default {
 </script>
 
 <style scoped src="../assets/css/home.css">
+.mainOpen {
+  padding-left: 120px
+}
+.mainClose {
+  padding-left: 50px
+}
 </style>

@@ -6,46 +6,63 @@
     </el-breadcrumb>
     <el-card class="card">
       <!-- 导航菜单 -->
-      <div>
+      <div style="">
+        <!-- 底层菜单 -->
         <template>
-          <a-tabs default-active-key="2" v-for="topItem in treeList" :key="topItem.treeId">
-            <a-tab-pane v-for="subItem in topItem.childMenu" :key="subItem.treeId">
-              <span slot="tab">
-                <a-icon type="apple" />
-                {{subItem.name}}
-              </span>
-              <!-- 底层菜单 -->
-              <template>
-                <div>
-                  <a-input-search
-                    v-model="searchStr"
-                    placeholder="输入搜选项"
-                    style="width:200px;"
-                    @search="onSearch"
-                  ></a-input-search>
-                  <!-- selectedKeys是选中项key的集合，expandedKeys是展开项key的集合 -->
-                  <a-tree
-                    v-model="checkedKeys"
-                    :treeData="treeList"
-                    :selectedKeys="selectedKeys"
-                    :expandedKeys="expandedKeys"
-                    @expand="onExpand"
-                    :autoExpandParent="autoExpandParent"
-                    :replaceFields="replaceFields"
-                    @select="onSelect"
-                  >
-                    <template slot="title" slot-scope="{name}">
-                      <span
-                        v-html="name.replace(new RegExp(searchValue,'g'),'<span style=color:#f50>'+ searchValue +'</span>')"
-                      ></span>
-                    </template>
-                  </a-tree>
-                </div>
+          <div style="float: left;width: 400px;margin-left:15%;">
+            <a-input-search
+              v-model="searchStr"
+              placeholder="输入搜选项"
+              style="width:300px;"
+              @search="onSearch"
+            ></a-input-search>
+            <!-- selectedKeys是选中项key的集合，expandedKeys是展开项key的集合 -->
+            <a-tree
+              v-model="checkedKeys"
+              :treeData="treeList"
+              :selectedKeys="selectedKeys"
+              :expandedKeys="expandedKeys"
+              @expand="onExpand"
+              :autoExpandParent="autoExpandParent"
+              :replaceFields="replaceFields"
+              @select="onSelect"
+            >
+              <template slot="title" slot-scope="{name}">
+                <span
+                  v-html="name.replace(new RegExp(searchValue,'g'),'<span style=color:#f50>'+ searchValue +'</span>')"
+                ></span>
               </template>
-              <!-- 底层菜单 -->
-            </a-tab-pane>
-          </a-tabs>
+            </a-tree>
+          </div>
         </template>
+        <!-- 底层菜单 -->
+      </div>
+      <div style="float:left;">
+        <div>
+          <template>
+        <div style="margin: 20px;"></div>
+        <el-form label-position="right" label-width="120px" :model="formLabelAlign">
+          <el-form-item label="编号">
+            <el-input v-model="formLabelAlign.name" ></el-input>
+          </el-form-item>
+          <el-form-item label="名称">
+            <el-input v-model="formLabelAlign.region"></el-input>
+          </el-form-item>
+          <el-form-item label="物料类别">
+            <el-input v-model="formLabelAlign.type"></el-input>
+          </el-form-item>
+          <el-form-item label="物料期限">
+            <el-input v-model="formLabelAlign.type"></el-input>
+          </el-form-item>
+          <el-form-item label="采购周期">
+            <el-input v-model="formLabelAlign.type"></el-input>
+          </el-form-item>
+          <el-form-item label="采购入库科目">
+            <el-input v-model="formLabelAlign.type"></el-input>
+          </el-form-item>
+        </el-form>
+        </template>
+        </div>
       </div>
       <!-- 结束 -->
     </el-card>
@@ -53,59 +70,12 @@
 </template>
 
 <script>
-const treeData = [
-  // {
-  //   name: "Hello",
-  //   key: "0-0",
-  //   scopedSlots: { title: "title" },
-  //   children: [
-  //     {
-  //       name: "0-0-0",
-  //       key: "0-0-0",
-  //       scopedSlots: { title: "title" },
-  //       children: [
-  //         { name: "0-0-0-1", key: "0-0-0-1", scopedSlots: { title: "title" } },
-  //         { name: "0-0-0-2", key: "0-0-0-2", scopedSlots: { title: "title" } }
-  //       ]
-  //     },
-  //     {
-  //       name: "0-0-1",
-  //       key: "0-0-1",
-  //       scopedSlots: { title: "title" },
-  //       children: [
-  //         { name: "0-0-1-0", key: "0-0-1-0", scopedSlots: { title: "title" } },
-  //         { name: "0-0-1-1", key: "0-0-1-1", scopedSlots: { title: "title" } },
-  //         { name: "0-0-1-2", key: "0-0-1-2", scopedSlots: { title: "title" } }
-  //       ]
-  //     },
-  //     {
-  //       name: "0-0-2",
-  //       key: "0-0-2",
-  //       scopedSlots: { title: "title" }
-  //     }
-  //   ]
-  // },
-  // {
-  //   name: "0-1",
-  //   scopedSlots: { title: "title" },
-  //   key: "0-1",
-  //   children: [
-  //     { name: "0-1-0-0", key: "0-1-0-0", scopedSlots: { title: "title" } },
-  //     { name: "0-1-0-1", key: "0-1-0-1", scopedSlots: { title: "title" } },
-  //     { name: "0-1-0-2", key: "0-1-0-2", scopedSlots: { title: "title" } }
-  //   ]
-  // },
-  // {
-  //   name: "0-2",
-  //   key: "0-2",
-  //   scopedSlots: { title: "title" }
-  // }
-];
+const treeData = [];
 export default {
   data() {
     return {
       treeList: [],
-      replaceFields: { title: "name", key: "treeId", children: 'childMenu' },
+      replaceFields: { title: "name", children: "childMenu" },
       expandedKeys: [],
       backupsExpandedKeys: [],
       autoExpandParent: false,
@@ -113,7 +83,12 @@ export default {
       selectedKeys: [],
       searchValue: "",
       treeData,
-      searchStr: ""
+      searchStr: "",
+      formLabelAlign: {
+          name: '',
+          region: '',
+          type: ''
+        }
     };
   },
   methods: {
@@ -130,7 +105,11 @@ export default {
         vm.expandedKeys = [];
         vm.backupsExpandedKeys = [];
         //  获取所有存在searchValue的节点
-        const candidateKeysList = vm.getkeyList(vm.searchValue, vm.treeList, []);
+        const candidateKeysList = vm.getkeyList(
+          vm.searchValue,
+          vm.treeList,
+          []
+        );
         //  遍历满足条件的所有节点
         candidateKeysList.map((item) => {
           //  获取每个节点的母亲节点
@@ -138,7 +117,7 @@ export default {
           //  当item是最高一级，父key为undefined，将不放入到数组中
           //  如果母亲已存在于数组中，也不放入到数组中
           if (key && !vm.backupsExpandedKeys.some((item) => item === key));
-            vm.backupsExpandedKeys.push(key);
+          vm.backupsExpandedKeys.push(key);
         });
         const length = this.backupsExpandedKeys.length;
         for (let i = 0; i < length; i++) {
@@ -233,9 +212,17 @@ export default {
   padding-top: 20px;
 }
 .card {
+  position: absolute;
   margin-top: 20px;
+  height: 100%;
+  margin-bottom: -200px;
+  overflow: auto;
+  width: 100%;
 }
 ::-webkit-scrollbar {
   display: none;
+}
+.ant-tree {
+  margin-bottom: 200px;
 }
 </style>
