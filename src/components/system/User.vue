@@ -40,7 +40,7 @@
       <div style="float:left;">
         <div>
           <template>
-        <div style="margin: 20px;"></div>
+        <div style="margin: 20px;position:absolute"></div>
         <el-form label-position="right" label-width="120px" :model="formLabelAlign">
           <el-form-item label="编号">
             <el-input v-model="formLabelAlign.name" ></el-input>
@@ -188,8 +188,12 @@ export default {
       this.checkedKeys = checkedKeys;
     },
     onSelect(selectedKeys, info) {
-      console.log("onSelect", info);
       this.selectedKeys = selectedKeys;
+      if (info.selectedNodes[0].data.key === '新增节点') {
+        console.log("开始新增")
+      } else {
+        console.log(info.selectedNodes[0].data)
+      }
     },
     async getProductType() {
       const { data: res } = await this.$http.get("product/type");
@@ -212,7 +216,7 @@ export default {
   padding-top: 20px;
 }
 .card {
-  position: absolute;
+  position: fixed;
   margin-top: 20px;
   height: 100%;
   margin-bottom: -200px;
