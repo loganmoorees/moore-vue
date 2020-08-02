@@ -59,7 +59,7 @@
   .aside-left {
     .el-menu {
       border-right: none;
-      float: unset;
+      /* float: unset; */
     }
   }
   .el-menu {
@@ -106,3 +106,6 @@
   .el-popper[x-placement^="bottom"] {
     margin-top: 19px;
   }
+::-webkit-scrollbar {
+  width: 20px;
+}

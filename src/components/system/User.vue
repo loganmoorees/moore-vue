@@ -6,7 +6,7 @@
     </el-breadcrumb>
     <el-card class="card">
       <!-- 导航菜单 -->
-      <div style="">
+      <div>
         <!-- 底层菜单 -->
         <template>
           <div style="float: left;width: 400px;margin-left:15%;">
@@ -37,10 +37,10 @@
         </template>
         <!-- 底层菜单 -->
       </div>
-      <div style="float:left;">
+      <div style="float:left;margin-bottom: 200px;">
         <div>
           <template>
-        <div style="margin: 20px;position:absolute"></div>
+        <div style="margin: 20px;position:fixed;"></div>
         <el-form label-position="right" label-width="120px" :model="formLabelAlign">
           <el-form-item label="编号">
             <el-input v-model="formLabelAlign.name" ></el-input>
@@ -188,11 +188,17 @@ export default {
       this.checkedKeys = checkedKeys;
     },
     onSelect(selectedKeys, info) {
-      this.selectedKeys = selectedKeys;
+      // this.selectedKeys = selectedKeys;
+      console.log(selectedKeys)
       if (info.selectedNodes[0].data.key === '新增节点') {
-        console.log("开始新增")
+        this.formLabelAlign.name = ''
+        this.formLabelAlign.type = ''
+        this.formLabelAlign.region = ''
       } else {
         console.log(info.selectedNodes[0].data)
+        this.formLabelAlign.name = '1'
+        this.formLabelAlign.type = '上衣'
+        this.formLabelAlign.region = info.selectedNodes[0].data.key
       }
     },
     async getProductType() {
