@@ -49,7 +49,16 @@
             <el-input v-model="formLabelAlign.region"></el-input>
           </el-form-item>
           <el-form-item label="物料类别">
-            <el-input v-model="formLabelAlign.type"></el-input>
+            <el-select v-model="value6" placeholder="请选择">
+            <el-option
+              v-for="item in cities"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+              <span style="float: left;color: #8492a6; font-size: 13px;">{{ item.label }}</span>
+              <span style="float: right">{{ item.value }}</span>
+            </el-option>
+          </el-select>
           </el-form-item>
           <el-form-item label="物料期限">
             <el-input v-model="formLabelAlign.type"></el-input>
@@ -88,7 +97,54 @@ export default {
           name: '',
           region: '',
           type: ''
-        }
+        },
+      cities: [{
+          value: 'Beijing',
+          label: '北京'
+        }, {
+          value: 'Shanghai',
+          label: '上海'
+        }, {
+          value: 'Nanjing',
+          label: '南京'
+        }, {
+          value: 'Chengdu',
+          label: '成都'
+        }, {
+          value: 'Shenzhen',
+          label: '深圳'
+        }, {
+          value: 'Guangzhou',
+          label: '广州'
+        }],
+        value6: '',
+      dateline: ['前期物料', '中期物料', '尾期物料'],
+      options3: [{
+          label: '热门城市',
+          options: [{
+            value: 'Shanghai',
+            label: '上海'
+          }, {
+            value: 'Beijing',
+            label: '北京'
+          }]
+        }, {
+          label: '城市名',
+          options: [{
+            value: 'Chengdu',
+            label: '成都'
+          }, {
+            value: 'Shenzhen',
+            label: '深圳'
+          }, {
+            value: 'Guangzhou',
+            label: '广州'
+          }, {
+            value: 'Dalian',
+            label: '大连'
+          }]
+        }],
+        value7: ''
     };
   },
   methods: {

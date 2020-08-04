@@ -3,7 +3,8 @@ import {
     Button, Form, FormItem, Input, Message,
     Container, Header, Aside, Main, Row, Col, Menu, Submenu,
     MenuItemGroup, MenuItem, Breadcrumb, BreadcrumbItem,
-    Card, DropdownMenu, DropdownItem, Dropdown, Badge
+    Card, DropdownMenu, DropdownItem, Dropdown, Badge, Select,
+    Option, OptionGroup
 } from 'element-ui'
 // 引入Ant Design Vue组件
 import Antd from 'ant-design-vue'
@@ -31,8 +32,9 @@ Vue.use(Dropdown)
 Vue.use(DropdownMenu)
 Vue.use(DropdownItem)
 Vue.use(Badge)
-// Vue.use(Collapse)
-// Vue.use(CollapseItem)
+Vue.use(Select)
+Vue.use(Option)
+Vue.use(OptionGroup)
 Vue.prototype.$message = Message
 // ant-design导入区域
 Vue.use(Antd)
