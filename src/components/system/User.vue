@@ -6,6 +6,9 @@
     </el-breadcrumb>
     <el-card class="card">
       <!-- 导航菜单 -->
+      <template>
+  <el-tabs v-model="activeName" @tab-click="handleClick">
+    <el-tab-pane label="用户管理" name="first">
       <div>
         <!-- 底层菜单 -->
         <template>
@@ -78,7 +81,14 @@
         </el-form>
         </template>
         </div>
+        <!-- 结束 -->
       </div>
+    </el-tab-pane>
+    <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
+    <el-tab-pane label="角色管理" name="third">角色管理</el-tab-pane>
+    <el-tab-pane label="定时任务补偿" name="fourth">定时任务补偿</el-tab-pane>
+  </el-tabs>
+</template>
       <!-- 结束 -->
     </el-card>
   </div>
@@ -89,6 +99,7 @@ const treeData = [];
 export default {
   data() {
     return {
+      activeName: 'second',
       treeList: [],
       replaceFields: { title: "name", children: "childMenu" },
       expandedKeys: [],
