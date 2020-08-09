@@ -52,11 +52,10 @@
             <el-select v-model="value6" placeholder="请选择">
             <el-option
               v-for="item in cities"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-              <span style="float: left;color: #8492a6; font-size: 13px;">{{ item.label }}</span>
-              <span style="float: right">{{ item.value }}</span>
+              :key="item.code"
+              :value="item.name">
+              <span style="float: right">{{ item.name }}</span>
+              <span style="float: left;color: #8492a6; font-size: 13px;">{{ item.code }}</span>
             </el-option>
           </el-select>
           </el-form-item>
@@ -70,8 +69,10 @@
             <el-cascader
               placeholder="试试搜索：指南"
               :options="options"
-              clearable = true
+              :props="param"
+              :clearable = true
               filterable
+              :show-all-levels = false
             ></el-cascader>
           </el-form-item>
         </el-form>
@@ -103,54 +104,15 @@ export default {
           region: '',
           type: ''
         },
-      cities: [{
-          value: 'Beijing',
-          label: '北京'
-        }, {
-          value: 'Shanghai',
-          label: '上海'
-        }, {
-          value: 'Nanjing',
-          label: '南京'
-        }, {
-          value: 'Chengdu',
-          label: '成都'
-        }, {
-          value: 'Shenzhen',
-          label: '深圳'
-        }, {
-          value: 'Guangzhou',
-          label: '广州'
-        }],
-        value6: '',
+      cities: [],
+      value6: '',
       dateline: ['前期物料', '中期物料', '尾期物料'],
-      options3: [{
-          label: '热门城市',
-          options: [{
-            value: 'Shanghai',
-            label: '上海'
-          }, {
-            value: 'Beijing',
-            label: '北京'
-          }]
-        }, {
-          label: '城市名',
-          options: [{
-            value: 'Chengdu',
-            label: '成都'
-          }, {
-            value: 'Shenzhen',
-            label: '深圳'
-          }, {
-            value: 'Guangzhou',
-            label: '广州'
-          }, {
-            value: 'Dalian',
-            label: '大连'
-          }]
-        }],
-        value7: '',
-        options: []
+      options: [],
+      param: {
+      label: 'name',
+        value: 'treeId',
+        children: 'childNode'
+      }
     };
   },
   methods: {
@@ -253,13 +215,10 @@ export default {
       // this.selectedKeys = selectedKeys;
       console.log(selectedKeys)
       if (info.selectedNodes[0].data.key === '新增节点') {
-        this.formLabelAlign.name = ''
-        this.formLabelAlign.type = ''
         this.formLabelAlign.region = ''
       } else {
         console.log(info.selectedNodes[0].data)
         this.formLabelAlign.name = '1'
-        this.formLabelAlign.type = '上衣'
         this.formLabelAlign.region = info.selectedNodes[0].data.key
       }
     },
@@ -275,14 +234,25 @@ export default {
       const { data: storage } = await this.$http.get("product/storage");
       console.log(storage.code)
       if (storage.code !== 200) {
-        return this.$message.error("货品分类获取失败");
+        return this.$message.error("入库科目获取失败");
       }
+      this.options = storage.data
       console.log(storage.data);
+    },
+    async getDeadline() {
+      const { data: deadline } = await this.$http.get("product/deadline");
+      console.log(deadline.code)
+      if (deadline.code !== 200) {
+        return this.$message.error("类别获取失败");
+      }
+      this.cities = deadline.data
+      console.log(deadline.data);
     }
   },
   created() {
     this.getProductType();
     this.getStorage();
+    this.getDeadline();
   }
 };
 </script>
