@@ -31,8 +31,9 @@
               @select="onSelect"
             >
               <template slot="title" slot-scope="{name}">
+                <a-button size="small" class="but_type" style="right:220px;"></a-button>
                 <span
-                  v-html="name.replace(new RegExp(searchValue,'g'),'<span style=color:#f50>'+ searchValue +'</span>')"
+                  v-html="name.replace(new RegExp(searchValue,'g'),'<span style=color:#ff00ff>'+ searchValue +'</span>')"
                 ></span>
               </template>
             </a-tree>
@@ -88,7 +89,7 @@
     <el-tab-pane label="角色管理" name="third">角色管理</el-tab-pane>
     <el-tab-pane label="定时任务补偿" name="fourth">定时任务补偿</el-tab-pane>
   </el-tabs>
-</template>
+  </template>
       <!-- 结束 -->
     </el-card>
   </div>
@@ -101,7 +102,7 @@ export default {
     return {
       activeName: 'second',
       treeList: [],
-      replaceFields: { title: "name", children: "childMenu" },
+      replaceFields: { children: "childMenu" },
       expandedKeys: [],
       backupsExpandedKeys: [],
       autoExpandParent: false,
@@ -164,6 +165,8 @@ export default {
     getkeyList(value, tree, keyList) {
       //  遍历所有同一级的树
       for (let i = 0; i < tree.length; i++) {
+        tree[i].scopedSlots = { title: 'title' }
+        tree[i].title = tree[i].name
         const node = tree[i];
         //  如果该节点存在value值则push
         if (node.name.indexOf(value) > -1) {
