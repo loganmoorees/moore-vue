@@ -6,8 +6,8 @@
     </el-breadcrumb>
     <el-card class="card">
       <!-- 导航菜单 -->
-      <template>
-  <el-tabs v-model="activeName" @tab-click="handleClick">
+      <!-- <template> -->
+  <el-tabs v-model="activeName">
     <el-tab-pane label="用户管理" name="first">
       <div>
         <!-- 底层菜单 -->
@@ -28,13 +28,15 @@
               @expand="onExpand"
               :autoExpandParent="autoExpandParent"
               :replaceFields="replaceFields"
-              @select="onSelect"
             >
-              <template slot="title" slot-scope="{name}">
-                <a-button size="small" class="but_type" style="right:220px;"></a-button>
+              <template slot="title" slot-scope="item">
+                <!-- <a-button size="small" class="but_type" style="right:220px;"></a-button> -->
                 <span
-                  v-html="name.replace(new RegExp(searchValue,'g'),'<span style=color:#ff00ff>'+ searchValue +'</span>')"
+                  v-html="item.name.replace(new RegExp(searchValue,'g'),'<span style=color:#ff00ff>'+ searchValue +'</span>')"
                 ></span>
+                <a-button size="small" icon="plus" style="margin-left:50px"></a-button>
+                <a-button size="small" icon="edit" style="margin-left:10px"></a-button>
+                <a-button type="danger" size="small" icon="close" style="margin-left:10px"></a-button>
               </template>
             </a-tree>
           </div>
@@ -89,7 +91,7 @@
     <el-tab-pane label="角色管理" name="third">角色管理</el-tab-pane>
     <el-tab-pane label="定时任务补偿" name="fourth">定时任务补偿</el-tab-pane>
   </el-tabs>
-  </template>
+  <!-- </template> -->
       <!-- 结束 -->
     </el-card>
   </div>
@@ -100,9 +102,9 @@ const treeData = [];
 export default {
   data() {
     return {
-      activeName: 'second',
+      activeName: 'first',
       treeList: [],
-      replaceFields: { children: "childMenu" },
+      replaceFields: { title: 'name', children: "childMenu" },
       expandedKeys: [],
       backupsExpandedKeys: [],
       autoExpandParent: false,
@@ -165,8 +167,6 @@ export default {
     getkeyList(value, tree, keyList) {
       //  遍历所有同一级的树
       for (let i = 0; i < tree.length; i++) {
-        tree[i].scopedSlots = { title: 'title' }
-        tree[i].title = tree[i].name
         const node = tree[i];
         //  如果该节点存在value值则push
         if (node.name.indexOf(value) > -1) {
@@ -185,6 +185,8 @@ export default {
       let parentKey, temp;
       //  遍历同级节点
       for (let i = 0; i < tree.length; i++) {
+        tree[i].scopedSlots = { title: 'title' }
+        tree[i].title = tree[i].name
         const node = tree[i];
         if (node.childMenu) {
           //  如果该节点的孩子中存在该key值，则该节点就是我们要找的父亲节点
@@ -243,6 +245,14 @@ export default {
       }
       console.log(res.data);
       this.treeList = res.data;
+      this.productType(this.treeList)
+    },
+    productType(treeList) {
+      for (let i = 0; i < this.treeList.length; i++) {
+        treeList[i].scopedSlots = { title: 'title' }
+        treeList[i].title = treeList[i].name
+        this.getParentKey(treeList[i].key, treeList)
+      }
     },
     async getStorage() {
       const { data: storage } = await this.$http.get("product/storage");
