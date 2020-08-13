@@ -34,7 +34,44 @@
                 <span
                   v-html="item.name.replace(new RegExp(searchValue,'g'),'<span style=color:#ff00ff>'+ searchValue +'</span>')"
                 ></span>
-                <a-button size="small" icon="plus" style="margin-left:50px"></a-button>
+                <a-modal v-model="visible" title="添加节点" @ok="handleOk">
+                  <el-form label-position="right" label-width="120px" :model="formLabelAlign">
+                    <el-form-item label="编号">
+                      <el-input v-model="formLabelAlign.name" ></el-input>
+                    </el-form-item>
+                    <el-form-item label="名称">
+                      <el-input v-model="formLabelAlign.region"></el-input>
+                    </el-form-item>
+                    <el-form-item label="物料类别">
+                      <el-select v-model="value6" placeholder="请选择">
+                      <el-option
+                        v-for="item in cities"
+                        :key="item.code"
+                        :value="item.name">
+                        <span style="float: right">{{ item.name }}</span>
+                        <span style="float: left;color: #8492a6; font-size: 13px;">{{ item.code }}</span>
+                      </el-option>
+                    </el-select>
+                    </el-form-item>
+                    <el-form-item label="物料期限">
+                      <el-input v-model="formLabelAlign.type"></el-input>
+                    </el-form-item>
+                    <el-form-item label="采购周期">
+                      <el-input v-model="formLabelAlign.type"></el-input>
+                    </el-form-item>
+                    <el-form-item label="采购入库科目">
+                      <el-cascader
+                        placeholder="试试搜索：指南"
+                        :options="options"
+                        :props="param"
+                        :clearable = true
+                        filterable
+                        :show-all-levels = false
+                      ></el-cascader>
+                    </el-form-item>
+                  </el-form>
+                </a-modal>
+                <a-button size="small" icon="plus" style="margin-left:50px" @click="showModal"></a-button>
                 <a-button size="small" icon="edit" style="margin-left:10px"></a-button>
                 <a-button type="danger" size="small" icon="close" style="margin-left:10px"></a-button>
               </template>
@@ -126,10 +163,18 @@ export default {
       label: 'name',
         value: 'treeId',
         children: 'childNode'
-      }
+      },
+      visible: false
     };
   },
   methods: {
+    showModal() {
+      this.visible = true;
+    },
+    handleOk(e) {
+      console.log(e);
+      this.visible = false;
+    },
     onSearch() {
       var vm = this;
       //  添加这行代码是为了只点击搜索才触发
