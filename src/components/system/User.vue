@@ -12,7 +12,7 @@
       <div>
         <!-- 底层菜单 -->
         <template>
-          <div style="float: left;width: 400px;margin-left:15%;">
+          <div style="width: 500px;margin: auto;">
             <a-input-search
               v-model="searchStr"
               placeholder="输入搜选项"
@@ -34,7 +34,15 @@
                 <span
                   v-html="item.name.replace(new RegExp(searchValue,'g'),'<span style=color:#ff00ff>'+ searchValue +'</span>')"
                 ></span>
-                <a-modal v-model="visible" title="添加节点" @ok="handleOk">
+                <a-modal v-model="visible" title="添加节点" @ok="handleOk" :keyboard=true :mask=false>
+                  <template slot="footer">
+                    <a-button key="back" @click="handleOk">
+                      取消
+                    </a-button>
+                    <a-button key="submit" type="primary" @click="handleOk">
+                      提交
+                    </a-button>
+                  </template>
                   <el-form label-position="right" label-width="120px" :model="formLabelAlign">
                     <el-form-item label="编号">
                       <el-input v-model="formLabelAlign.name" ></el-input>
@@ -43,7 +51,7 @@
                       <el-input v-model="formLabelAlign.region"></el-input>
                     </el-form-item>
                     <el-form-item label="物料类别">
-                      <el-select v-model="value6" placeholder="请选择">
+                      <el-select v-model="value6" placeholder="请选择" class="selectWidth">
                       <el-option
                         v-for="item in cities"
                         :key="item.code"
@@ -67,61 +75,67 @@
                         :clearable = true
                         filterable
                         :show-all-levels = false
+                        class="selectWidth"
                       ></el-cascader>
                     </el-form-item>
                   </el-form>
                 </a-modal>
-                <a-button size="small" icon="plus" style="margin-left:50px" @click="showModal"></a-button>
-                <a-button size="small" icon="edit" style="margin-left:10px"></a-button>
-                <a-button type="danger" size="small" icon="close" style="margin-left:10px"></a-button>
+                <a-button size="small" icon="plus" style="margin-left:100px" @click="showModal"></a-button>
+                <!-- 修改-->
+                <a-modal v-model="editVisible" title="修改节点" @ok="editOk" :keyboard=true :mask=false>
+                  <template slot="footer">
+                    <a-button key="back" @click="editOk">
+                      取消
+                    </a-button>
+                    <a-button key="submit" type="primary" @click="editOk">
+                      提交
+                    </a-button>
+                  </template>
+                  <el-form label-position="right" label-width="120px" :model="formLabelAlign">
+                    <el-form-item label="编号">
+                      <el-input v-model="formLabelAlign.name" ></el-input>
+                    </el-form-item>
+                    <el-form-item label="名称">
+                      <el-input v-model="formLabelAlign.region"></el-input>
+                    </el-form-item>
+                    <el-form-item label="物料类别">
+                      <el-select v-model="value6" placeholder="请选择" class="selectWidth">
+                      <el-option
+                        v-for="item in cities"
+                        :key="item.code"
+                        :value="item.name">
+                        <span style="float: right">{{ item.name }}</span>
+                        <span style="float: left;color: #8492a6; font-size: 13px;">{{ item.code }}</span>
+                      </el-option>
+                    </el-select>
+                    </el-form-item>
+                    <el-form-item label="物料期限">
+                      <el-input v-model="formLabelAlign.type"></el-input>
+                    </el-form-item>
+                    <el-form-item label="采购周期">
+                      <el-input v-model="formLabelAlign.type"></el-input>
+                    </el-form-item>
+                    <el-form-item label="采购入库科目">
+                      <el-cascader
+                        placeholder="试试搜索：指南"
+                        :options="options"
+                        :props="param"
+                        :clearable = true
+                        filterable
+                        :show-all-levels = false
+                        class="selectWidth"
+                      ></el-cascader>
+                    </el-form-item>
+                  </el-form>
+                </a-modal>
+                <!-- 修改结束 -->
+                <a-button size="small" icon="edit" style="margin-left:15px" @click="openModal"></a-button>
+                <a-button type="danger" size="small" icon="close" style="margin-left:15px"></a-button>
               </template>
             </a-tree>
           </div>
         </template>
         <!-- 底层菜单 -->
-      </div>
-      <div style="float:left;margin-bottom: 200px;">
-        <div>
-          <template>
-        <div style="margin: 20px;position:fixed;"></div>
-        <el-form label-position="right" label-width="120px" :model="formLabelAlign">
-          <el-form-item label="编号">
-            <el-input v-model="formLabelAlign.name" ></el-input>
-          </el-form-item>
-          <el-form-item label="名称">
-            <el-input v-model="formLabelAlign.region"></el-input>
-          </el-form-item>
-          <el-form-item label="物料类别">
-            <el-select v-model="value6" placeholder="请选择">
-            <el-option
-              v-for="item in cities"
-              :key="item.code"
-              :value="item.name">
-              <span style="float: right">{{ item.name }}</span>
-              <span style="float: left;color: #8492a6; font-size: 13px;">{{ item.code }}</span>
-            </el-option>
-          </el-select>
-          </el-form-item>
-          <el-form-item label="物料期限">
-            <el-input v-model="formLabelAlign.type"></el-input>
-          </el-form-item>
-          <el-form-item label="采购周期">
-            <el-input v-model="formLabelAlign.type"></el-input>
-          </el-form-item>
-          <el-form-item label="采购入库科目">
-            <el-cascader
-              placeholder="试试搜索：指南"
-              :options="options"
-              :props="param"
-              :clearable = true
-              filterable
-              :show-all-levels = false
-            ></el-cascader>
-          </el-form-item>
-        </el-form>
-        </template>
-        </div>
-        <!-- 结束 -->
       </div>
     </el-tab-pane>
     <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
@@ -164,16 +178,23 @@ export default {
         value: 'treeId',
         children: 'childNode'
       },
-      visible: false
+      visible: false,
+      editVisible: false
     };
   },
   methods: {
+    openModal() {
+      this.editVisible = true;
+    },
     showModal() {
       this.visible = true;
     },
     handleOk(e) {
       console.log(e);
       this.visible = false;
+    },
+    editOk(e) {
+      this.editVisible = false;
     },
     onSearch() {
       var vm = this;
@@ -344,5 +365,9 @@ export default {
 }
 .ant-tree {
   margin-bottom: 200px;
+}
+.selectWidth {
+    padding-right: 30px;
+    width: 380px !important;
 }
 </style>
