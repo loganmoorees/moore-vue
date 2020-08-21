@@ -35,14 +35,13 @@
           v-for="(item,arr) in menuList"
           :key="item.id"
         >
-          <el-submenu :index="item.id + ''">
+          <el-submenu v-if="item.childMenus != null" :index="item.id + ''">
             <template slot="title">
               <i :class="iclassOne(arr)"></i>
-              <span>{{item.menuName}}</span>
+              <span slot="title">{{item.menuName}}</span>
             </template>
-
             <!-- 二级菜单 -->
-              <div v-for="(subItem,subArr) in item.childMenus" :key="subItem.menuId">
+              <div v-for="(subItem) in item.childMenus" :key="subItem.menuId">
                 <el-submenu
                   :index="subItem.menuPath + ''"
                   v-if="subItem.childMenus != null"
@@ -52,8 +51,8 @@
                   @click="saveNavState(subItem.menuPath)"
                 >
                   <template slot="title">
-                    <i :class="iclassTwo(subArr)"></i>
-                    <span>{{subItem.menuName}}</span>
+                    <!-- <i :class="iclassTwo(subArr)"></i> -->
+                    <span slot="title">{{subItem.menuName}}</span>
                   </template>
                   <!-- <el-menu-item v-if="subItem.childMenus == null">
                     <template slot="title">
@@ -69,20 +68,24 @@
                     is-active="true"
                   >
                     <template>
-                      <span>{{child.menuName}}</span>
+                      <span slot="title">{{child.menuName}}</span>
                     </template>
                   </el-menu-item>
                   <!-- 三级菜单结束 -->
                 </el-submenu>
                 <el-menu-item v-if="subItem.childMenus == null" :index="subItem.menuPath">
                   <template>
-                    <i :class="iclassTwo(subArr)"></i>
-                    <span>{{subItem.menuName}}</span>
+                    <!-- <i :class="iclassTwo(subArr)"></i> -->
+                    <span slot="title">{{subItem.menuName}}</span>
                   </template>
                 </el-menu-item>
               </div>
             <!-- 二级菜单结束 -->
           </el-submenu>
+          <el-menu-item v-if="item.childMenus == null" :index="item.menuPath + ''">
+              <i :class="iclassOne(arr)"></i>
+              <span>{{item.menuName}}</span>
+          </el-menu-item>
         </el-menu>
       </el-aside>
       <el-main :style="mainStyle">
@@ -102,11 +105,9 @@ export default {
       menuList: [],
       iconOne: [
         "iconfont icon-data iconSystem",
-        "iconfont icon-heiban iconHeiban",
-        "iconfont icon-shengchanqiye iconShengchan",
-        "iconfont icon-caigoudingdan iconCaigou",
+        "iconfont icon-xitong iconXitong",
         "iconfont icon-kccx iconKccx",
-        "iconfont icon-xitong",
+        "iconfont icon-caigoudingdan iconCaigou",
         "iconfont icon-feiyongduoweifenxi iconFeiyong"
       ],
       // 二级菜单
@@ -182,4 +183,8 @@ export default {
 .mainClose {
   padding-left: 50px
 }
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+    width: 200px;
+    min-height: 400px;
+  }
 </style>
